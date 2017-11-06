@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.Controller">
+   <children>
+      <AnchorPane prefHeight="340.0" prefWidth="500.0">
+         <children>
+            <Label fx:id="filePathLabel" layoutX="14.0" layoutY="6.0" prefHeight="6.0" prefWidth="36.0" text="Файл: " />
+            <TextArea fx:id="filePathArea" layoutX="14.0" layoutY="26.0" prefHeight="17.0" prefWidth="472.0" />
+            <Button id="openFileButton" layoutX="14.0" layoutY="71.0" mnemonicParsing="false" onAction="#openFile" text="Открыть" />
+            <Label fx:id="logLabel" layoutX="14.0" layoutY="96.0" prefHeight="25.0" prefWidth="36.0" text="Лог: " />
+            <Button id="startButton" layoutX="120.0" layoutY="71.0" mnemonicParsing="false" onAction="#start" text="Запуск" />
+            <TextArea fx:id="logArea" layoutX="14.0" layoutY="121.0" prefHeight="167.0" prefWidth="472.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>
