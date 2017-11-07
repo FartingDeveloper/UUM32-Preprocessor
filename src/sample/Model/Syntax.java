@@ -241,6 +241,7 @@ public class Syntax {
     public static class SyntaxException extends Exception{
         public static final String LIB_IS_NOT_FOUND = " библиотека не найдена. Файл библиотеки должен находиться в одной директории с файлом *.UUM32MASM";
         public static final String INCORRECT_LIB_NAME = "Некорректное имя библиотеки";
+        public static final String MACROS_IS_NOT_DECLARED = "Макрос не объявлен ранее.";
         public static final String MACROS_IS_NOT_FOUND = "Макрос не найден.";
         public static final String WRONG_ARGUMENTS = "Не совпадение параметров макроса и передаваемых аргументов.";
         public static final String WRONG_PARAMS = "Ошибка в записи параметра.";

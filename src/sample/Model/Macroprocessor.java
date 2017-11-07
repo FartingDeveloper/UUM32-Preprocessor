@@ -111,7 +111,7 @@ public class Macroprocessor {
                         if(!Syntax.checkKeyWord(line)){
                             Macros insideMacros = checkMacros(line);
                             if(insideMacros == null){
-                                throw new Syntax.SyntaxException(lineNumber, Syntax.SyntaxException.MACROS_IS_NOT_FOUND);
+                                throw new Syntax.SyntaxException(lineNumber, Syntax.SyntaxException.MACROS_IS_NOT_DECLARED);
                             }else{
                                 for(String name : macroses.keySet()){
                                     if(Syntax.matchWord(line, name)){
@@ -142,6 +142,7 @@ public class Macroprocessor {
                         }
                     }
                 }
+                lineNumber++;
             }while ((line = br.readLine()) != null);
         }
         catch (IOException e) {
