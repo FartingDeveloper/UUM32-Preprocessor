@@ -16,7 +16,7 @@ public class Macroprocessor {
         macroses = new HashMap<>();
 
         StringBuffer result = new StringBuffer(Syntax.EMPTY_LINE);
-        int lineNumber = 0;
+        int lineNumber = 1;
         try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(masm), Syntax.ENCODING))){
             String line = br.readLine();
 
@@ -79,7 +79,7 @@ public class Macroprocessor {
     }
 
     private void createMacros(File lib) throws Syntax.SyntaxException {
-        int lineNumber = 0;
+        int lineNumber = 1;
         try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(lib), Syntax.ENCODING))){
             ArrayList<Macros> insideMacroses = new ArrayList<>();
 
@@ -97,12 +97,10 @@ public class Macroprocessor {
                     tmp.append(Syntax.NEXT_LINE);
 
                     while(!Syntax.isMacrosEnded(line = br.readLine())){
-
                         if(Syntax.isEmpty(line)){
                             lineNumber++;
                             continue;
                         }
-
                         if(Syntax.isComment(line)){
                             lineNumber++;
                             continue;
