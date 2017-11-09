@@ -22,7 +22,6 @@ public class Syntax {
             "SB", "SC", "SHL", "SHR", "SIO", "ST", "STB", "STH", "SUB", "SUBB", "SUBH", "SUBR", "START",
             "TD", "TIO",
             "WD", "WORD"
-
     };
     public static final String ENCODING = "UTF-8";
     public static final String UTF8_BOM = "\uFEFF";
@@ -33,6 +32,7 @@ public class Syntax {
     public static final String END = "MEND";
 
     public static final char COMMENT = ';';
+    public static final String COMMENT_STRING = ";";
     public static final char COMMA = ',';
 
     public static final char COLON = ':';
@@ -57,6 +57,10 @@ public class Syntax {
     public static final String NOP = "\tNOP\t";
     public static final String EMPTY_LINE = "";
     public static final char SLASH = '\\';
+
+    public static final String MACROS_BEGIN = "=============MACRO=============";
+    public static final String MACROS_END = "=============MEND=============";
+    public static final String COMMENT_LINE = "=============";
 
     public static boolean isEmpty(String line){
         line = line.replaceAll(ESCAPE_CODE, EMPTY_LINE); //Clear from enscape code

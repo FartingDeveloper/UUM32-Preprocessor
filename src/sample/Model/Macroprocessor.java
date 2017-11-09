@@ -45,7 +45,7 @@ public class Macroprocessor {
 
                 if(!Syntax.checkKeyWord(line)){
                     if(!Syntax.isPartOfComment(line, Syntax.COLON)){
-                        result.append(line.trim().substring(0, line.indexOf(Syntax.COLON) + 1));
+                        result.append(line.trim().substring(0, line.indexOf(Syntax.COLON) + 1) + Syntax.NEXT_LINE);
                     }
                     line = insertMacro(line);
                     if(line == null){
@@ -94,15 +94,15 @@ public class Macroprocessor {
                     String macroName = line.replaceAll(Syntax.SPACE_STRING, Syntax.EMPTY_LINE).substring(0, line.indexOf(Syntax.COLON)).toUpperCase();
 
                     StringBuilder tmp = new StringBuilder(line);
-                    tmp.append(Syntax.NEXT_LINE);
+                    tmp.append(Syntax.NEXT_LINE + Syntax.COMMENT_STRING + Syntax.MACROS_BEGIN + macroName + Syntax.COMMENT_LINE + Syntax.NEXT_LINE);
 
                     while(!Syntax.isMacrosEnded(line = br.readLine())){
+                        lineNumber++;
+
                         if(Syntax.isEmpty(line)){
-                            lineNumber++;
                             continue;
                         }
                         if(Syntax.isComment(line)){
-                            lineNumber++;
                             continue;
                         }
 
@@ -123,14 +123,16 @@ public class Macroprocessor {
                         }
                         tmp.append(line);
                         tmp.append(Syntax.NEXT_LINE);
-
-                        lineNumber++;
                     }
 
                     String end = Syntax.replaceEnd(line);
                     if(end != null){
                         tmp.append(end);
                     }
+
+                    tmp.append(Syntax.COMMENT_STRING + Syntax.COMMENT_LINE + macroName + Syntax.COMMENT_LINE  + Syntax.MACROS_END  + Syntax.NEXT_LINE);
+
+                    lineNumber++;
 
                     macroses.put(macroName, new Macros(tmp.toString()));
 
@@ -140,6 +142,7 @@ public class Macroprocessor {
                         }
                     }
                 }
+
                 lineNumber++;
             }while ((line = br.readLine()) != null);
         }
