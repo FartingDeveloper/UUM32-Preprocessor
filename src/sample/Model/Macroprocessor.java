@@ -36,6 +36,13 @@ public class Macroprocessor {
                     continue;
                 }
 
+                if(Syntax.isLabel(line)){
+                    lineNumber++;
+                    result.append(line);
+                    result.append(Syntax.NEXT_LINE);
+                    continue;
+                }
+
                 if(Syntax.isLib(line)){
                     File lib = findLib(line, masm.getAbsolutePath());
                     createMacros(lib);
@@ -103,6 +110,12 @@ public class Macroprocessor {
                             continue;
                         }
                         if(Syntax.isComment(line)){
+                            continue;
+                        }
+
+                        if(Syntax.isLabel(line)){
+                            tmp.append(line);
+                            tmp.append(Syntax.NEXT_LINE);
                             continue;
                         }
 

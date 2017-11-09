@@ -71,6 +71,15 @@ public class Syntax {
         return false;
     }
 
+    public static boolean isLabel(String line){
+        line = line.replaceAll(ESCAPE_CODE, EMPTY_LINE); //Clear from enscape code
+        line = line.replaceAll(SPACE_STRING, EMPTY_LINE); //Clear from space
+        if(line.indexOf(COLON) == (line.length() - 1)){
+            return true;
+        }
+        return false;
+    }
+
     public static boolean checkKeyWord(String line) {
         for (int i = 0; i < keyWords.length; i++) {
             if (matchWord(line, keyWords[i])) {
