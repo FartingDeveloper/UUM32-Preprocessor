@@ -51,6 +51,7 @@ public class Syntax {
     public static final char DOLLAR = '$';
     public static final char PARAM = '&';
     public static final char PLUS = '+';
+    public static final char MINUS = '-';
     public static final char ARR = '[';
     public static final char DOT = '.';
     public static final char SHARP = '#';
@@ -143,7 +144,7 @@ public class Syntax {
     }
 
     private static boolean isSeparateLeft(char symb){
-        if(symb == SHARP || symb == SPACE || symb == COLON || symb == DOLLAR || symb == PARAM || symb == TAB  || symb == PLUS || symb == COMMA){
+        if(symb == SHARP || symb == SPACE || symb == COLON || symb == DOLLAR || symb == PARAM || symb == TAB  || symb == PLUS || symb == COMMA || symb == MINUS){
             return true;
         }
         return false;
