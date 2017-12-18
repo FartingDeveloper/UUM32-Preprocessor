@@ -1,5 +1,7 @@
 package sample.Model;
 
+import java.util.regex.Pattern;
+
 /**
  * Created by HP PC on 31.10.2017.
  */
@@ -30,6 +32,8 @@ public class Syntax {
     public static final String INCLUDE = "INCLUDE";
     public static final String BEGIN = "MACRO";
     public static final String END = "MEND";
+
+    public static final char GLOBAL_VARIABLE = '@';
 
     public static final char COMMENT = ';';
     public static final String COMMENT_STRING = ";";
@@ -63,6 +67,9 @@ public class Syntax {
     public static final String MACROS_END = "=============MEND=============";
     public static final String COMMENT_LINE = "=============";
 
+    public static String leftSeparator = "(" + SHARP + "|" + SPACE + "|" + COLON + "|" + DOLLAR + "|" + PARAM + "|" + TAB + "|" + SLASH + PLUS + "|" + COMMA + "|" + MINUS + ")";
+    public static String rightSeparator = "(" + SPACE + "|" + TAB + "|" + NEXT_LINE + "|" + SLASH + ARR + "|" + COMMA + ")";
+
     public static boolean isEmpty(String line){
         line = line.replaceAll(ESCAPE_CODE, EMPTY_LINE); //Clear from enscape code
         line = line.replaceAll(SPACE_STRING, EMPTY_LINE); //Clear from space
@@ -86,12 +93,21 @@ public class Syntax {
             if (matchWord(line, keyWords[i])) {
                 return true;
             }
+            else{
+                line = line.toUpperCase();
+
+                Pattern pattern = Pattern.compile(leftSeparator + "*" + keyWords[i] + EMPTY_LINE);
+                if(pattern.matcher(line).find()){
+                    return true;
+                }
+            }
         }
         return false;
     }
 
     public static boolean matchWord(String line, String word){
         int com = line.indexOf(COMMENT);
+
         if(com != -1){
             line = line.substring(0, com);
         }
@@ -99,62 +115,8 @@ public class Syntax {
         line = line.toUpperCase();
         word = word.toUpperCase();
 
-        if(line.contains(word)){;
-            int count = wordCount(line, word);
-
-            for(int i = 0; i < count; i++){
-                int start = line.indexOf(word);
-                if(start != 0){
-                    char symb = line.charAt(start - 1);
-                    if(!isSeparateLeft(symb)){
-                        line = line.substring(start + word.length());
-                        continue;
-                    }
-                }
-                int end = line.indexOf(word) + word.length();
-                if(end == line.length()){
-                    return true;
-                }
-                if(end < line.length()){
-                    char symb = line.charAt(end);
-                    if(isSeparateRight(symb)){
-                        return true;
-                    }
-                }
-                line = line.substring(start + word.length());
-            }
-        }
-        return false;
-    }
-
-    private static int wordCount(String line, String word){
-        int lastIndex = 0;
-        int count = 0;
-
-        while(lastIndex != -1){
-
-            lastIndex = line.indexOf(word,lastIndex);
-
-            if(lastIndex != -1){
-                count ++;
-                lastIndex += word.length();
-            }
-        }
-        return count;
-    }
-
-    private static boolean isSeparateLeft(char symb){
-        if(symb == SHARP || symb == SPACE || symb == COLON || symb == DOLLAR || symb == PARAM || symb == TAB  || symb == PLUS || symb == COMMA || symb == MINUS){
-            return true;
-        }
-        return false;
-    }
-
-    private static boolean isSeparateRight(char symb){
-        if(symb == SPACE  || symb == TAB || symb == NEXT_LINE  || symb == ARR || symb == COMMA){
-            return true;
-        }
-        return false;
+        Pattern pattern = Pattern.compile(leftSeparator + "+" + word + rightSeparator + "+");
+        return pattern.matcher(line).find();
     }
 
     public static boolean isComment(String line){
@@ -170,24 +132,24 @@ public class Syntax {
     }
 
     public static boolean isLib(String line){
-        if(matchWord(line, INCLUDE)) {
-            return true;
-        }
-        return false;
+        line = line.toUpperCase();
+
+        Pattern pattern = Pattern.compile(leftSeparator + "*" + INCLUDE + rightSeparator + "+");
+        return pattern.matcher(line).find();
     }
 
     public static boolean isMacrosBegin(String line){
-        if(matchWord(line, BEGIN)){
-            return true;
-        }
-        return false;
+        line = line.toUpperCase();
+
+        Pattern pattern = Pattern.compile(leftSeparator + "+" + BEGIN + rightSeparator + "*");
+        return pattern.matcher(line).find();
     }
 
     public static boolean isMacrosEnded(String line) throws SyntaxException {
-        if(matchWord(line, END)){
-            return true;
-        }
-        return false;
+        line = line.toUpperCase();
+
+        Pattern pattern = Pattern.compile(leftSeparator + "*" + END + rightSeparator + "*");
+        return pattern.matcher(line).find();
     }
 
     public static String replaceEnd(String line){
@@ -277,6 +239,13 @@ public class Syntax {
             String message = "Ошибка в строке " + lineNumber + ": " + super.getMessage();
             return message;
         }
+    }
+
+    public static void main(String[] args) {
+        String rightSeparator = "(" + SLASH + PLUS + ")";
+        System.out.println(INCLUDE  + rightSeparator);
+        Pattern pattern = Pattern.compile(INCLUDE + rightSeparator);
+        System.out.println(pattern.matcher("    INCLUDE").find());
     }
 
 }

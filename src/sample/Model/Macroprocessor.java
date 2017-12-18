@@ -149,7 +149,7 @@ public class Macroprocessor {
 
                     macroses.put(macroName, new Macros(tmp.toString()));
 
-                    if(insideMacroses.size() != 0){
+                    if(insideMacroses.size() != 0){                     // ADD LABELS OF INSIDE MACROSES INTO MACROS
                         for(int i = 0; i < insideMacroses.size(); i++){
                             macroses.get(macroName).joinMacros(insideMacroses.get(i));
                         }
