@@ -61,7 +61,7 @@ public class Syntax {
     public static final char SHARP = '#';
     public static final String NOP = "\tNOP\t";
     public static final String EMPTY_LINE = "";
-    public static final char SLASH = '\\';
+    public static final String SLASH = "\\";
 
     public static final String MACROS_BEGIN = "=============MACRO=============";
     public static final String MACROS_END = "=============MEND=============";
@@ -96,7 +96,7 @@ public class Syntax {
             else{
                 line = line.toUpperCase();
 
-                Pattern pattern = Pattern.compile(leftSeparator + "*" + keyWords[i] + EMPTY_LINE);
+                Pattern pattern = Pattern.compile(leftSeparator + "*" + keyWords[i]);
                 if(pattern.matcher(line).find()){
                     return true;
                 }
