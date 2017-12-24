@@ -130,7 +130,7 @@ public class Macroprocessor {
                                         break;
                                     }
                                 }
-                                line = insideMacros.getMacrosWithArgs(prepareArgs(line));
+                                line = insideMacros.getMacros(prepareArgs(line));
                                 insideMacroses.add(insideMacros);
                             }
                         }

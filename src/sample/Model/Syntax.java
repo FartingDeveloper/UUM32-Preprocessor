@@ -45,8 +45,8 @@ public class Syntax {
     public static final char NEXT_LINE = '\n';
     public static final char TAB = '\t';
 
-    public static final char SPACE = ' ';
     public static final String SPACE_STRING = " ";
+    public static final String SPACE_STRINGS = "\\s";
 
     public static final char QUOTATION_MARK = '"';
 
@@ -67,8 +67,8 @@ public class Syntax {
     public static final String MACROS_END = "=============MEND=============";
     public static final String COMMENT_LINE = "=============";
 
-    public static String leftSeparator = "(" + SHARP + "|" + SPACE + "|" + COLON + "|" + DOLLAR + "|" + PARAM + "|" + TAB + "|" + SLASH + PLUS + "|" + COMMA + "|" + MINUS + ")";
-    public static String rightSeparator = "(" + SPACE + "|" + TAB + "|" + NEXT_LINE + "|" + SLASH + ARR + "|" + COMMA + ")";
+    public static String leftSeparator = "(" + SPACE_STRINGS + "|" + SHARP + "|" + COLON + "|" + DOLLAR + "|" + PARAM + "|" + SLASH + PLUS + "|" + COMMA + "|" + MINUS + "|" + DOLLAR_SIGN + ")";
+    public static String rightSeparator = "(" + SPACE_STRINGS + "|" + SLASH + ARR + "|" + COMMA + "|" + DOLLAR_SIGN + ")";
 
     public static boolean isEmpty(String line){
         line = line.replaceAll(ESCAPE_CODE, EMPTY_LINE); //Clear from enscape code
@@ -80,6 +80,8 @@ public class Syntax {
     }
 
     public static boolean isLabel(String line){
+        line = deleteComment(line);
+
         line = line.replaceAll(ESCAPE_CODE, EMPTY_LINE); //Clear from enscape code
         line = line.replaceAll(SPACE_STRING, EMPTY_LINE); //Clear from space
         if(line.indexOf(COLON) == (line.length() - 1)){
@@ -89,34 +91,42 @@ public class Syntax {
     }
 
     public static boolean checkKeyWord(String line) {
+
         for (int i = 0; i < keyWords.length; i++) {
             if (matchWord(line, keyWords[i])) {
                 return true;
             }
-            else{
-                line = line.toUpperCase();
-
-                Pattern pattern = Pattern.compile(leftSeparator + "*" + keyWords[i]);
-                if(pattern.matcher(line).find()){
-                    return true;
-                }
-            }
+//            else{
+//                line = line.toUpperCase();
+//
+//                Pattern pattern = Pattern.compile(leftSeparator + "*" + keyWords[i]);
+//                if(pattern.matcher(line).find()){
+//                    return true;
+//                }
+//            }
         }
         return false;
     }
 
     public static boolean matchWord(String line, String word){
+
+        line = deleteComment(line);
+
+        line = line.toUpperCase();
+        word = word.toUpperCase();
+
+        Pattern pattern = Pattern.compile(leftSeparator + word  + rightSeparator);
+
+        return pattern.matcher(line).find();
+    }
+
+    public static String deleteComment(String line){
         int com = line.indexOf(COMMENT);
 
         if(com != -1){
             line = line.substring(0, com);
         }
-
-        line = line.toUpperCase();
-        word = word.toUpperCase();
-
-        Pattern pattern = Pattern.compile(leftSeparator + "+" + word + rightSeparator + "+");
-        return pattern.matcher(line).find();
+        return line;
     }
 
     public static boolean isComment(String line){
@@ -214,6 +224,7 @@ public class Syntax {
         return true;
     }
 
+
     public static class SyntaxException extends Exception{
         public static final String LIB_IS_NOT_FOUND = " библиотека не найдена. Файл библиотеки должен находиться в одной директории с файлом *.UUM32MASM";
         public static final String INCORRECT_LIB_NAME = "Некорректное имя библиотеки";
@@ -242,10 +253,9 @@ public class Syntax {
     }
 
     public static void main(String[] args) {
-        String rightSeparator = "(" + SLASH + PLUS + ")";
-        System.out.println(INCLUDE  + rightSeparator);
-        Pattern pattern = Pattern.compile(INCLUDE + rightSeparator);
-        System.out.println(pattern.matcher("    INCLUDE").find());
+        System.out.println("^" + INCLUDE + "$");
+        Pattern pattern = Pattern.compile(".*" + INCLUDE + "$");
+        System.out.println(pattern.matcher("  INCLUDE").find());
     }
 
 }

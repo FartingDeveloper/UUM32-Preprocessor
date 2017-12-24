@@ -120,12 +120,6 @@ public class Macros {
         labelCounter++;
     }
 
-    public String getMacrosWithArgs(String[] args) throws Syntax.SyntaxException {
-        String result = replaceParams(args);
-        if(result == null) result = macros;
-        return result;
-    }
-
     private String replaceParams(String... args) throws Syntax.SyntaxException {
         StringBuilder result = new StringBuilder(Syntax.EMPTY_LINE);
         if(args != null){
