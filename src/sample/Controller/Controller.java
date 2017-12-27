@@ -4,14 +4,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
-import sample.Model.Macroprocessor;
+import sample.Model.MacroProcessor;
 import sample.Model.Syntax;
 
 import java.io.File;
 
 public class Controller {
 
-    private Macroprocessor macroprocessor;
+    private MacroProcessor macroprocessor;
     private File file;
 
     @FXML
@@ -24,7 +24,7 @@ public class Controller {
     private TextArea logArea;
 
     public Controller(){
-        macroprocessor = new Macroprocessor();
+        macroprocessor = new MacroProcessor();
     }
 
     public void openFile(){

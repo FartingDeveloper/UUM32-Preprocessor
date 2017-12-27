@@ -33,6 +33,9 @@ public class Syntax {
     public static final String BEGIN = "MACRO";
     public static final String END = "MEND";
 
+    public static final String VAR = "VAR";
+    public static final String VEND = "VEND";
+    public static final String RETURN = "RET";
     public static final char GLOBAL_VARIABLE = '@';
 
     public static final char COMMENT = ';';
@@ -142,24 +145,33 @@ public class Syntax {
     }
 
     public static boolean isLib(String line){
-        line = line.toUpperCase();
-
-        Pattern pattern = Pattern.compile(leftSeparator + "*" + INCLUDE + rightSeparator + "+");
-        return pattern.matcher(line).find();
+        //line = line.toUpperCase();
+        //Pattern pattern = Pattern.compile(leftSeparator + "*" + INCLUDE + rightSeparator + "+");
+        return matchWord(line, INCLUDE);
     }
 
-    public static boolean isMacrosBegin(String line){
-        line = line.toUpperCase();
-
-        Pattern pattern = Pattern.compile(leftSeparator + "+" + BEGIN + rightSeparator + "*");
-        return pattern.matcher(line).find();
+    public static boolean isMacrosBeginning(String line){
+        //line = line.toUpperCase();
+        //Pattern pattern = Pattern.compile(leftSeparator + "+" + BEGIN + rightSeparator + "*");
+        return matchWord(line, BEGIN);
     }
 
-    public static boolean isMacrosEnded(String line) throws SyntaxException {
-        line = line.toUpperCase();
+    public static boolean isMacrosEnding(String line) throws SyntaxException {
+        //line = line.toUpperCase();
+        //Pattern pattern = Pattern.compile(leftSeparator + "*" + END + rightSeparator + "*");
+        return matchWord(line, END);
+    }
 
-        Pattern pattern = Pattern.compile(leftSeparator + "*" + END + rightSeparator + "*");
-        return pattern.matcher(line).find();
+    public static boolean isGlobalVarBeginning(String line){
+        return matchWord(line, VAR);
+    }
+
+    public static boolean isGlobalVarEnding(String line){
+        return matchWord(line, VEND);
+    }
+
+    public static boolean isReturn(String line){
+        return matchWord(line, RETURN);
     }
 
     public static String replaceEnd(String line){
@@ -254,8 +266,8 @@ public class Syntax {
 
     public static void main(String[] args) {
         System.out.println("^" + INCLUDE + "$");
-        Pattern pattern = Pattern.compile(".*" + INCLUDE + "$");
-        System.out.println(pattern.matcher("  INCLUDE").find());
+        Pattern pattern = Pattern.compile("$");
+        System.out.println(pattern.matcher("").find());
     }
 
 }

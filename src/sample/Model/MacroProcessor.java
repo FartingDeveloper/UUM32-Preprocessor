@@ -3,17 +3,21 @@ package sample.Model;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
  * Created by HP PC on 30.10.2017.
  */
-public class Macroprocessor {
+public class MacroProcessor {
 
     private HashMap<String, Macros> macroses;
+    private Set<String> globalVars;
 
     public void transform(File masm) throws Syntax.SyntaxException {
         macroses = new HashMap<>();
+        globalVars = new HashSet<>();
 
         StringBuffer result = new StringBuffer(Syntax.EMPTY_LINE);
         int lineNumber = 1;
@@ -63,6 +67,13 @@ public class Macroprocessor {
                 result.append(line);
                 result.append('\n');
 
+                if(Syntax.isReturn(line)){     // ADDING GLOBAL VARS
+                    for(String var: globalVars){
+                        result.append(var);
+                        result.append('\n');
+                    }
+                }
+
                 lineNumber++;
             }while ((line = br.readLine()) != null);
         }
@@ -97,13 +108,20 @@ public class Macroprocessor {
             line = line.replaceAll(Syntax.UTF8_BOM, Syntax.EMPTY_LINE);
 
             do{
-                if(Syntax.isMacrosBegin(line)){
+                if(Syntax.isGlobalVarBeginning(line)){
+                    while(!Syntax.isGlobalVarEnding(line = br.readLine())){
+                        globalVars.add(line);
+                    }
+                    continue;
+                }
+
+                if(Syntax.isMacrosBeginning(line)){
                     String macroName = line.replaceAll(Syntax.SPACE_STRING, Syntax.EMPTY_LINE).substring(0, line.indexOf(Syntax.COLON)).toUpperCase();
 
                     StringBuilder tmp = new StringBuilder(line);
                     tmp.append(Syntax.NEXT_LINE + Syntax.COMMENT_STRING + Syntax.MACROS_BEGIN + macroName + Syntax.COMMENT_LINE + Syntax.NEXT_LINE);
 
-                    while(!Syntax.isMacrosEnded(line = br.readLine())){
+                    while(!Syntax.isMacrosEnding(line = br.readLine())){
                         lineNumber++;
 
                         if(Syntax.isEmpty(line)){
