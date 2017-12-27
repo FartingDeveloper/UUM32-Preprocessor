@@ -69,6 +69,7 @@ public class Syntax {
     public static final String MACROS_BEGIN = "=============MACRO=============";
     public static final String MACROS_END = "=============MEND=============";
     public static final String COMMENT_LINE = "=============";
+    public static final String LABEL_LINE = "___";
 
     public static String leftSeparator = "(" + SPACE_STRINGS + "|" + SHARP + "|" + COLON + "|" + DOLLAR + "|" + PARAM + "|" + SLASH + PLUS + "|" + COMMA + "|" + MINUS + "|" + DOLLAR_SIGN + ")";
     public static String rightSeparator = "(" + SPACE_STRINGS + "|" + SLASH + ARR + "|" + COMMA + "|" + DOLLAR_SIGN + ")";
@@ -263,11 +264,4 @@ public class Syntax {
             return message;
         }
     }
-
-    public static void main(String[] args) {
-        System.out.println("^" + INCLUDE + "$");
-        Pattern pattern = Pattern.compile("$");
-        System.out.println(pattern.matcher("").find());
-    }
-
 }

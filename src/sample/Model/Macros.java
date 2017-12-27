@@ -31,7 +31,7 @@ public class Macros {
         }
 
         for(int i = 0; i < labels.size(); i++){
-            String label = "___" + labels.get(i) + "___" + labelCounter;
+            String label = Syntax.LABEL_LINE + labels.get(i) + Syntax.LABEL_LINE + labelCounter;
             result = result.replaceAll(Syntax.DOLLAR_STRING + labels.get(i), label);
         }
 
