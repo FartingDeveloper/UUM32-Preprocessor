@@ -11,7 +11,7 @@ public class Macros {
     private ArrayList<String> params;
     private ArrayList<String> labels;
 
-    private static int labelCounter;
+    private static long labelCounter;
 
     public Macros(String macros) throws Syntax.SyntaxException {
         this.macros = macros.substring(macros.indexOf(Syntax.NEXT_LINE) + 1, macros.length());
@@ -36,6 +36,19 @@ public class Macros {
         }
 
         labelCounter++;
+        return result;
+    }
+
+    public String getInnerMacros(String ... args) throws Syntax.SyntaxException {
+        String result = null;
+
+        if((params.size() == 0) && args == null){
+            result = macros;
+        }
+        else{
+            result = replaceParams(args);
+        }
+
         return result;
     }
 

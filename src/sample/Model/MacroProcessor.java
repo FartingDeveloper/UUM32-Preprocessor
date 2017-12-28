@@ -148,7 +148,7 @@ public class MacroProcessor {
                                         break;
                                     }
                                 }
-                                line = insideMacros.getMacros(prepareArgs(line));
+                                line = insideMacros.getInnerMacros(prepareArgs(line));
                                 insideMacroses.add(insideMacros);
                             }
                         }
