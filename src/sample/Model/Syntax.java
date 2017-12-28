@@ -55,6 +55,7 @@ public class Syntax {
 
     public static final String DOLLAR_STRING = "\\$";
     public static final String DOLLAR_SIGN = "$";
+    public static final String XOR_SIGN = "^";
     public static final char DOLLAR = '$';
     public static final char PARAM = '&';
     public static final char PLUS = '+';
@@ -71,7 +72,7 @@ public class Syntax {
     public static final String COMMENT_LINE = "=============";
     public static final String LABEL_LINE = "___";
 
-    public static String leftSeparator = "(" + SPACE_STRINGS + "|" + SHARP + "|" + COLON + "|" + DOLLAR + "|" + PARAM + "|" + SLASH + PLUS + "|" + COMMA + "|" + MINUS + "|" + DOLLAR_SIGN + ")";
+    public static String leftSeparator = "(" + SPACE_STRINGS + "|" + SHARP + "|" + COLON + "|" + DOLLAR + "|" + PARAM + "|" + SLASH + PLUS + "|" + COMMA + "|" + MINUS + "|" + XOR_SIGN + ")";
     public static String rightSeparator = "(" + SPACE_STRINGS + "|" + SLASH + ARR + "|" + COMMA + "|" + DOLLAR_SIGN + ")";
 
     public static boolean isEmpty(String line){
